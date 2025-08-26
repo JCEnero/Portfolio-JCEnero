@@ -144,10 +144,22 @@ export default function About() {
                         </div>
                     </div>
 
-                    {/* Timeline Line */}
-                    {!isLast && (
-                        <div className="w-0.5 h-20 bg-gradient-to-b from-gray-500 to-gray-600 mt-4"></div>
-                    )}
+ <div className="relative flex items-start">
+  {/* Timeline content */}
+  <div className="flex flex-col items-center">
+
+    
+    {/* Timeline Line */}
+    {!isLast && (
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2 h-56 bg-gradient-to-b from-gray-500 to-gray-600 z-0"></div>
+    )}
+  </div>
+
+  <div className="ml-4">
+    {/* Other content like text */}
+  </div>
+</div>
+
                 </div>
 
                 {/* Content Card */}
