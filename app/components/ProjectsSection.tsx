@@ -17,7 +17,7 @@ export default function ProjectsSection() {
             tech: ['React', 'Firebase', 'Python', 'C++', 'Arduino', 'HTML', 'CSS'],
             github: 'https://github.com/JCEnero',
             demo: 'https://irriqcu.web.app/',
-            image: '/projects/irriqcu-project.png',
+            image: '/projects/Irriqcu-project.png',
             status: 'Live'
         },
         {

@@ -79,7 +79,7 @@ export default function About() {
         };
         index: number;
         isLast: boolean;
-    }
+    }   
 
     const TimelineCard: React.FC<TimelineCardProps> = ({ item, index, isLast }) => (
         <motion.div
