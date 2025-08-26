@@ -15,16 +15,16 @@ export default function ProjectsSection() {
             title: 'AI-Integrated IoT Solution for Sustainable Farming',
             description: 'Created an AI-powered IoT irrigation system with smart sensors and predictive algorithms, optimizing water usage by 37%, boosting crop yield efficiency by 22%, and reducing manual labor needs by 40%.',
             tech: ['React', 'Firebase', 'Python', 'C++', 'Arduino', 'HTML', 'CSS'],
-            github: 'https://github.com/your-username/ecommerce',
+            github: 'https://github.com/JCEnero',
             demo: 'https://irriqcu.web.app/',
-            image: '/projects/irriqcu-project.jpg',
+            image: '/projects/irriqcu-project.png',
             status: 'Live'
         },
         {
             title: 'Interactive 3D Campus Navigation Guide (Kiosk-Based)',
             description: 'Created a kiosk-based 3D web app with VB.NET and Three.js, guiding visitors across 8 campus buildings, improving navigation speed by 2x, and cutting manual assistance needs by 40%.',
             tech: ['Three.js', 'Node.js', 'VB.NET', 'Blender'],
-            github: 'https://github.com/your-username/campus-navigation',
+            github: 'https://github.com/JCEnero',
             demo: 'https://your-campus-navigation-demo.com',
             image: '/projects/findme-project.png',
             status: 'Completed'
@@ -33,7 +33,7 @@ export default function ProjectsSection() {
             title: 'Real-time Disaster Relief Mapping System',
             description: 'A web app that locates nearby shelters, food, and medical aid during emergencies, cutting search time by 65% and boosting relief efficiency by 40%.',
             tech: ['Vue.js', 'Python', 'Flask', 'Chart.js'],
-            github: 'https://github.com/your-username/weather-dashboard',
+            github: 'https://github.com/JCEnero',
             demo: 'https://your-weather-demo.com',
             image: '/projects/development.png',
             status: 'Development'
@@ -42,7 +42,7 @@ export default function ProjectsSection() {
             title: 'AI-Powered Automated Budget & Expense Planner',
             description: 'An AI-powered web-based financial management system that automates expense tracking and budgeting, helping users cut costs by 25%, boost savings by 20%, and reduce manual budgeting by 40% through predictive insights and smart recommendations.',
             tech: ['React', 'Python', 'TensorFlow', 'FastAPI'],
-            github: 'https://github.com/your-username/ai-content',
+            github: 'https://github.com/JCEnero',
             demo: 'https://your-ai-demo.com',
             image: '/projects/development.png',
             status: 'Development'
