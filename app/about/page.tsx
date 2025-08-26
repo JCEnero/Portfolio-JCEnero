@@ -68,7 +68,14 @@ export default function About() {
             type: string;
             logo: string;
             link: string;
-            [key: string]: any;
+            title?: string;
+            company?: string;
+            period?: string;
+            description?: string;
+            degree?: string;
+            school?: string;
+            organizer?: string;
+            cardImage?: string;
         };
         index: number;
         isLast: boolean;
@@ -98,10 +105,10 @@ export default function About() {
                                 src={item.logo}
                                 alt={
                                     item.type === 'work'
-                                        ? item.company
+                                        ? item.company ?? 'Work Logo'
                                         : item.type === 'education'
-                                            ? item.school
-                                            : item.organizer
+                                            ? item.school ?? 'Education Logo'
+                                            : item.organizer ?? 'Competition Logo'
                                 }
                                 fill
                                 className="object-cover"
@@ -110,15 +117,16 @@ export default function About() {
                                     const target = e.target as HTMLImageElement;
                                     const parent = target.parentElement;
                                     if (parent) {
-                                        const initials = (item.type === 'work'
+                                        const name = (item.type === 'work'
                                             ? item.company
                                             : item.type === 'education'
                                                 ? item.school
-                                                : (item.organizer || ''))
+                                                : item.organizer) ?? '';
+                                        const initials = name
                                             .split(' ')
                                             .map((w: string) => w[0])
                                             .join('')
-                                            .slice(0, 2);
+                                            .slice(0, 2) || '?';
                                         const bgClass =
                                             item.type === 'work'
                                                 ? 'bg-gradient-to-br from-blue-400 to-blue-600'
