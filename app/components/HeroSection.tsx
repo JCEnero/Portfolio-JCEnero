@@ -227,7 +227,7 @@ export default function HeroSection() {
                     initial={{ y: 50 }}
                     animate={{ y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-3xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+                    className="text-4xl md:text-6xl font-extrabold md:font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
                 >
                     John Carl Enero
                 </motion.h1>

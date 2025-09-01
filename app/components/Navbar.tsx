@@ -51,7 +51,7 @@ export default function Navbar() {
                                     times: [0, 0.3, 0.6, 1],
                                 }
                             }}
-                            className="w-24 h-24"
+                            className="w-16 h-16 md:w-24 md:h-24"
                         >
                             <img 
                                 src="/LOGO.png" 
