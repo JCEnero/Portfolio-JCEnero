@@ -260,7 +260,7 @@ export default function About() {
                         >
                             <h1 className="text-4xl md:text-6xl font-bold mb-6">
                                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-                                    About Myself
+                                    About Me
                                 </span>
                             </h1>
                             <p className="text-lg text-gray-300 mb-6 leading-relaxed">

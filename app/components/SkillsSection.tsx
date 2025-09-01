@@ -49,9 +49,9 @@ export default function SkillsSection() {
 							<Image
 								src={skill.icon}
 								alt={skill.name}
-								width={60}
-								height={60}
-								className="mb-3"
+								width={38}
+								height={38}
+								className="mb-2 md:mb-3"
 							/>
 							<p className="text-sm font-medium text-gray-200">{skill.name}</p>
 						</motion.div>

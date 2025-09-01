@@ -98,18 +98,19 @@ export default function Navbar() {
                     animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
                     className="md:hidden overflow-hidden"
                 >
-                    <div className="pt-4 pb-2 space-y-2">
+                    <div className="pt-4 pb-2 flex flex-col items-end space-y-2 pr-4">
                         {navItems.map((item) => (
                             <Link
                                 key={item.name}
                                 href={item.path}
                                 onClick={() => setIsOpen(false)}
-                                className={`block py-2 px-4 rounded-lg transition-colors duration-300 ${
+                                className={`flex items-center gap-2 py-2 px-4 rounded-full shadow-sm bg-white/5 hover:bg-blue-600/80 text-sm font-semibold transition-all duration-300 ${
                                     pathname === item.path
-                                        ? 'bg-blue-900/30 text-blue-400'
-                                        : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                                        ? 'bg-blue-600/90 text-white' 
+                                        : 'text-gray-200 hover:text-white'
                                 }`}
                             >
+                                <span className="w-2 h-2 rounded-full bg-blue-400/80" style={{ opacity: pathname === item.path ? 1 : 0 }}></span>
                                 {item.name}
                             </Link>
                         ))}
