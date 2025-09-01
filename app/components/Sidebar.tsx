@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import Image from "next/image";
 import { icons } from "./SidebarIcons";
 
 const navItems = [
@@ -33,7 +33,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
               className="text-center"
             >
               <div className="relative w-20 h-20 mx-auto mb-4 rounded-2xl overflow-hidden">
-                <img src="/pfp.jpg" alt="Profile" className="w-full h-full object-cover" />
+                <Image src="/pfp.jpg" alt="Profile" fill className="object-cover" />
               </div>
               <motion.div
                 initial={{ y: 10, opacity: 0 }}

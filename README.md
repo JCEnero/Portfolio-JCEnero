@@ -104,3 +104,8 @@ Follow these steps to deploy your portfolio for free using GitHub and Vercel:
    - Click "Deploy"
 
 Your portfolio will be live in minutes with a free Vercel domain (e.g., `your-repo.vercel.app`). You can later add a custom domain in your Vercel project settings.
+
+
+git add .
+git commit -m "Fixed"
+git push origin master

@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 
 const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
 

@@ -89,11 +89,11 @@ export default function About() {
             className="relative group cursor-pointer"
             onClick={() => window.open(item.link, '_blank')}
         >
-            <div className="flex items-start space-x-6">
+            <div className="flex flex-col sm:flex-row items-start sm:space-x-6 space-y-4 sm:space-y-0">
                 {/* Timeline Line and Logo */}
                 <div className="relative flex flex-col items-center">
                     {/* Logo Circle */}
-                    <div className={`w-16 h-16 bg-gray-900/90 backdrop-blur-sm border-4 rounded-full overflow-hidden flex items-center justify-center ${
+                    <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gray-900/90 backdrop-blur-sm border-4 rounded-full overflow-hidden flex items-center justify-center ${
                         item.type === 'work'
                             ? 'border-blue-400'
                             : item.type === 'education'
@@ -164,7 +164,7 @@ export default function About() {
                 </div>
 
                 {/* Content Card */}
-                <div className="flex-1 bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 group-hover:bg-white/10">
+                <div className="flex-1 bg-white/5 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 group-hover:bg-white/10">
                     <div className="flex items-start justify-between">
                         <div className="flex-1">
                             <div className="flex items-center space-x-2 mb-2">
@@ -177,21 +177,21 @@ export default function About() {
                                 </span>
                             </div>
 
-                            <h3 className="text-xl font-semibold text-white mb-1 group-hover:text-blue-400 transition-colors duration-300">
+                            <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 group-hover:text-blue-400 transition-colors duration-300">
                                 {item.type === 'work' ? item.title : item.type === 'education' ? item.degree : item.title}
                             </h3>
 
-                            <p className={`font-medium mb-1 ${item.type === 'work' ? 'text-blue-400' : 'text-purple-400'}`}>
+                            <p className={`font-medium mb-1 text-sm sm:text-base ${item.type === 'work' ? 'text-blue-400' : 'text-purple-400'}`}>
                                 {item.type === 'work' ? item.company : item.type === 'education' ? item.school : item.organizer}
                             </p>
 
-                            <p className="text-gray-400 text-sm mb-3">{item.period}</p>
-                            <p className="text-gray-300 text-sm leading-relaxed">{item.description}</p>
+                            <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3">{item.period}</p>
+                            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">{item.description}</p>
 
                             {/* NEW: big image inside competition cards */}
                             {item.type === 'competition' && item.cardImage && (
-                                <div className="mt-4 ml-6 -mr-6">
-                                    <div className="relative w-full h-80 sm:h-96 md:h-[28rem] lg:h-[30rem] overflow-hidden border border-white/10">
+                                <div className="mt-4 -mx-2 sm:ml-6 sm:-mr-6">
+                                    <div className="relative w-full h-48 sm:h-80 md:h-96 lg:h-[28rem] overflow-hidden border border-white/10">
                                         <Image
                                             src={item.cardImage}
                                             alt={`${item.title} image`}
@@ -305,7 +305,7 @@ export default function About() {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                                 transition={{ duration: 0.8 }}
-                                className="text-3xl md:text-4xl  text-center mb-12 text-white"
+                                className="text-2xl sm:text-3xl md:text-4xl text-center mb-8 sm:mb-12 text-white"
                             >
                                 Work Experience
                             </motion.h2>
