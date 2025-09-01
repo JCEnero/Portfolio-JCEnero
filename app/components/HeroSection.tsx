@@ -133,7 +133,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="absolute top-0 w-full bg-transparent z-50"
             >
-                <div className="container mx-auto px-6 py-6">
+                <div className="container mx-auto px-6 py-6 mt-8">
                     <div className="flex items-center justify-end">
                         {/* Desktop Navigation - Top Right */}
                         <div className="hidden md:flex space-x-8">

@@ -32,9 +32,26 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
               transition={{ delay: 0.2 }}
               className="text-center"
             >
-              <div className="relative w-20 h-20 mx-auto mb-4 rounded-2xl overflow-hidden">
-                <Image src="/pfp.jpg" alt="Profile" fill className="object-cover" />
-              </div>
+              <Link 
+                href="/" 
+                className="block relative w-24 h-24 mx-auto mb-4 cursor-pointer"
+                onClick={onClose}
+              >
+                <motion.div
+                  whileHover={{ 
+                    scale: [1, 1.1, 1.05],
+                    rotate: [0, -3, 3, 0],
+                    transition: {
+                      duration: 0.6,
+                      ease: "easeInOut",
+                      times: [0, 0.3, 0.6, 1],
+                    }
+                  }}
+                  className="w-full h-full"
+                >
+                  <Image src="/LOGO.png" alt="Logo" fill className="object-contain" priority />
+                </motion.div>
+              </Link>
               <motion.div
                 initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}

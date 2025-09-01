@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import ScrollToTop from './ScrollToTop';
 
 const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
 
@@ -27,6 +28,7 @@ export default function ClientLayout({
       <main className="w-full overflow-x-hidden">
         {children}
       </main>
+      <ScrollToTop />
     </div>
   );
 }

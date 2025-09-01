@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
@@ -11,6 +11,18 @@ const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
 export default function Navbar() {
     const pathname = usePathname();
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [visible, setVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.scrollY;
+            // Only show navbar when very close to top
+            setVisible(currentScrollPos < 100);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const navItems = [
         { name: 'Works', path: '/works' },
@@ -21,25 +33,32 @@ export default function Navbar() {
     return (
         <motion.nav
             initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute top-0 w-full bg-transparent z-50"
+            animate={{ y: visible ? 0 : -100 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-0 w-full z-50 mt-0 transition-all duration-300"
         >
             <div className="container mx-auto px-6 py-6">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="text-3xl font-extrabold tracking-tight">
-                        <motion.span
-                            whileHover={{ scale: 1.08, rotate: 2 }}
-                            className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-600 drop-shadow-lg font-mono uppercase letter-spacing-widest"
-                            style={{
-                                letterSpacing: '0.15em',
-                                textShadow: '0 2px 16px rgba(80,180,255,0.25)',
-                                WebkitTextStroke: '1px #3b82f6',
+                    <Link href="/" className={`text-3xl font-extrabold tracking-tight transition-all duration-300`}>
+                        <motion.div
+                            whileHover={{ 
+                                scale: [1, 1.1, 1.05],
+                                rotate: [0, -3, 3, 0],
+                                transition: {
+                                    duration: 0.6,
+                                    ease: "easeInOut",
+                                    times: [0, 0.3, 0.6, 1],
+                                }
                             }}
+                            className="w-24 h-24"
                         >
-                            JCE
-                        </motion.span>
+                            <img 
+                                src="/LOGO.png" 
+                                alt="JCE Logo" 
+                                className="w-full h-full object-contain"
+                            />
+                        </motion.div>
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -50,8 +69,7 @@ export default function Navbar() {
                                 href={item.path}
                                 className="relative group"
                             >
-                                <motion.span
-                                    whileHover={{ y: -2 }}
+                                <span
                                     className={`text-sm font-medium transition-colors duration-300 ${
                                         pathname === item.path
                                             ? 'text-blue-400'
@@ -59,13 +77,7 @@ export default function Navbar() {
                                     }`}
                                 >
                                     {item.name}
-                                </motion.span>
-                                {pathname === item.path && (
-                                    <motion.div
-                                        layoutId="activeTab"
-                                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-600"
-                                    />
-                                )}
+                                </span>
                             </Link>
                         ))}
                     </div>
@@ -73,31 +85,22 @@ export default function Navbar() {
                     {/* Sidebar Trigger for Mobile */}
                     <button
                         onClick={() => setSidebarOpen(!isSidebarOpen)}
-                        className="md:hidden p-2 text-gray-300 hover:text-white focus:outline-none"
+                        className="md:hidden p-2 text-gray-300 hover:text-white focus:outline-none transition-all duration-300"
                         aria-label="Toggle sidebar"
                     >
                         <motion.div
                             whileTap={{ scale: 0.85 }}
-                            className="w-8 h-8 flex flex-col justify-center items-center relative"
+                            className="w-8 h-8 flex flex-col justify-center items-center gap-1.5"
                         >
-                            <motion.span
-                                animate={isSidebarOpen 
-                                    ? { rotate: 45, y: 7, width: 20 } 
-                                    : { rotate: 0, y: -6, width: 24 }}
-                                className="block h-0.5 bg-current rounded-full absolute transition-all duration-300"
-                                style={{ transformOrigin: "50% 50%" }}
-                            />
-                            <motion.span
-                                animate={isSidebarOpen ? { opacity: 0 } : { opacity: 1 }}
-                                className="block w-6 h-0.5 bg-current rounded-full absolute transition-all duration-300"
-                            />
-                            <motion.span
-                                animate={isSidebarOpen 
-                                    ? { rotate: -45, y: 7, width: 20 } 
-                                    : { rotate: 0, y: 6, width: 24 }}
-                                className="block h-0.5 bg-current rounded-full absolute transition-all duration-300"
-                                style={{ transformOrigin: "50% 50%" }}
-                            />
+                            <div className={`w-6 h-0.5 bg-gray-300 transform transition-all duration-300 ${
+                                isSidebarOpen ? 'rotate-45 translate-y-2' : ''
+                            }`} />
+                            <div className={`w-6 h-0.5 bg-gray-300 transition-all duration-300 ${
+                                isSidebarOpen ? 'opacity-0' : 'opacity-100'
+                            }`} />
+                            <div className={`w-6 h-0.5 bg-gray-300 transform transition-all duration-300 ${
+                                isSidebarOpen ? '-rotate-45 -translate-y-2' : ''
+                            }`} />
                         </motion.div>
                     </button>
                 </div>
