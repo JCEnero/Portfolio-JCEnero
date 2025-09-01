@@ -72,17 +72,32 @@ export default function Navbar() {
 
                     {/* Sidebar Trigger for Mobile */}
                     <button
-                        onClick={() => setSidebarOpen(true)}
+                        onClick={() => setSidebarOpen(!isSidebarOpen)}
                         className="md:hidden p-2 text-gray-300 hover:text-white focus:outline-none"
-                        aria-label="Open sidebar"
+                        aria-label="Toggle sidebar"
                     >
                         <motion.div
                             whileTap={{ scale: 0.85 }}
-                            className="w-8 h-8 flex items-center justify-center"
+                            className="w-8 h-8 flex flex-col justify-center items-center relative"
                         >
-                            <span className="block w-7 h-0.5 bg-current rounded-full mb-1"></span>
-                            <span className="block w-7 h-0.5 bg-current rounded-full mb-1"></span>
-                            <span className="block w-7 h-0.5 bg-current rounded-full"></span>
+                            <motion.span
+                                animate={isSidebarOpen 
+                                    ? { rotate: 45, y: 7, width: 20 } 
+                                    : { rotate: 0, y: -6, width: 24 }}
+                                className="block h-0.5 bg-current rounded-full absolute transition-all duration-300"
+                                style={{ transformOrigin: "50% 50%" }}
+                            />
+                            <motion.span
+                                animate={isSidebarOpen ? { opacity: 0 } : { opacity: 1 }}
+                                className="block w-6 h-0.5 bg-current rounded-full absolute transition-all duration-300"
+                            />
+                            <motion.span
+                                animate={isSidebarOpen 
+                                    ? { rotate: -45, y: 7, width: 20 } 
+                                    : { rotate: 0, y: 6, width: 24 }}
+                                className="block h-0.5 bg-current rounded-full absolute transition-all duration-300"
+                                style={{ transformOrigin: "50% 50%" }}
+                            />
                         </motion.div>
                     </button>
                 </div>

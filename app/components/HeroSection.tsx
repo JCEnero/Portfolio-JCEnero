@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
 
 export default function HeroSection() {
     const [displayedText, setDisplayedText] = useState('');
@@ -172,48 +175,33 @@ export default function HeroSection() {
                             className="md:hidden p-2 text-gray-300 hover:text-white rounded-lg hover:bg-gray-800/50 transition-colors duration-300"
                         >
                             <motion.div
-                                animate={isOpen ? { rotate: 45 } : { rotate: 0 }}
-                                className="w-6 h-6 relative"
+                                whileTap={{ scale: 0.85 }}
+                                className="w-8 h-8 flex flex-col justify-center items-center relative"
                             >
                                 <motion.span
-                                    animate={isOpen ? { rotate: 90, y: 0 } : { rotate: 0, y: -8 }}
-                                    className="absolute block h-0.5 w-6 bg-current transform transition"
+                                    animate={isOpen 
+                                        ? { rotate: 45, y: 7, width: 20 } 
+                                        : { rotate: 0, y: -6, width: 24 }}
+                                    className="block h-0.5 bg-current rounded-full absolute transition-all duration-300"
+                                    style={{ transformOrigin: "50% 50%" }}
                                 />
                                 <motion.span
                                     animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                                    className="absolute block h-0.5 w-6 bg-current transform"
+                                    className="block w-6 h-0.5 bg-current rounded-full absolute transition-all duration-300"
                                 />
                                 <motion.span
-                                    animate={isOpen ? { rotate: -90, y: 0 } : { rotate: 0, y: 8 }}
-                                    className="absolute block h-0.5 w-6 bg-current transform transition"
+                                    animate={isOpen 
+                                        ? { rotate: -45, y: 7, width: 20 } 
+                                        : { rotate: 0, y: 6, width: 24 }}
+                                    className="block h-0.5 bg-current rounded-full absolute transition-all duration-300"
+                                    style={{ transformOrigin: "50% 50%" }}
                                 />
                             </motion.div>
                         </button>
                     </div>
 
-                    {/* Mobile Menu */}
-                    <motion.div
-                        initial={false}
-                        animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-                        className="md:hidden overflow-hidden"
-                    >
-                        <div className="pt-4 pb-2 space-y-2">
-                            {navItems.map((item) => (
-                                <Link
-                                    key={item.name}
-                                    href={item.path}
-                                    onClick={() => setIsOpen(false)}
-                                    className={`block py-3 px-4 rounded-lg transition-colors duration-300 ${
-                                        pathname === item.path
-                                            ? 'bg-blue-900/30 text-blue-400'
-                                            : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
-                                    }`}
-                                >
-                                    {item.name}
-                                </Link>
-                            ))}
-                        </div>
-                    </motion.div>
+                    {/* Sidebar for Mobile */}
+                    <Sidebar isOpen={isOpen} onClose={() => setIsOpen(false)} />
                 </div>
             </motion.nav>
 

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { icons } from "./SidebarIcons";
 
 const navItems = [
   { name: "Works", path: "/works" },
@@ -21,29 +22,44 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: "-100%", opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-[#181A20] to-[#23272F] shadow-2xl flex flex-col px-6 py-10"
+          className="fixed inset-y-0 left-0 z-50 w-64 bg-[#181A20] shadow-2xl flex flex-col px-6 py-10 border-r border-blue-900/30"
         >
-          <button
-            onClick={onClose}
-            className="self-end mb-8 text-gray-400 hover:text-white text-2xl focus:outline-none"
-            aria-label="Close sidebar"
-          >
-            &times;
-          </button>
-          <nav className="flex flex-col gap-4 mt-8">
+          {/* Profile Section */}
+          <div className="mb-12">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="relative w-20 h-20 mx-auto mb-4 rounded-2xl overflow-hidden">
+                <img src="/pfp.jpg" alt="Profile" className="w-full h-full object-cover" />
+              </div>
+              <motion.div
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <h2 className="text-xl font-bold text-white mb-1">John Carl Enero</h2>
+                <p className="text-sm text-blue-400 font-medium">Full Stack Developer</p>
+              </motion.div>
+            </motion.div>
+          </div>
+          <nav className="flex flex-col gap-3">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.path}
                 onClick={onClose}
-                className={`px-4 py-3 rounded-xl text-lg font-semibold transition-all duration-300 flex items-center gap-3 ${
-                  pathname === item.path
-                    ? "bg-blue-600/90 text-white shadow-lg"
-                    : "text-gray-300 hover:bg-blue-600/40 hover:text-white"
-                }`}
+                className={`group px-2 py-2 rounded-lg text-base font-medium flex items-center gap-3 transition-all duration-300
+                  ${pathname === item.path ? "text-blue-400" : "text-gray-300 hover:text-blue-400"}
+                `}
+                style={{ background: 'none', boxShadow: 'none' }}
               >
-                <span className="w-2 h-2 rounded-full bg-blue-400/80" style={{ opacity: pathname === item.path ? 1 : 0 }}></span>
-                {item.name}
+                <span className="flex items-center justify-center w-7 h-7">
+                  {icons[item.name as keyof typeof icons]}
+                </span>
+                <span className="truncate">{item.name}</span>
               </Link>
             ))}
           </nav>

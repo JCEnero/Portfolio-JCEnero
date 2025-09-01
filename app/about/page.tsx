@@ -111,6 +111,7 @@ export default function About() {
                                             : item.organizer ?? 'Competition Logo'
                                 }
                                 fill
+                                sizes="(max-width: 768px) 48px, 96px"
                                 className="object-cover"
                                 onError={(e) => {
                                     // Fallback to initials if image fails to load
@@ -242,6 +243,7 @@ export default function About() {
                                         src="/pfp.jpg"
                                         alt="John Carl Enero"
                                         fill
+                                        sizes="(max-width: 768px) 320px, 400px"
                                         className="object-cover"
                                         onError={(e) => {
                                             e.currentTarget.src =
