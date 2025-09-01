@@ -35,26 +35,30 @@ export default function SkillsSection() {
 					
 				</motion.h2>
 
-				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8">
+				   <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
 					{skills.map((skill, index) => (
-						<motion.div
-							key={skill.name}
-							initial={{ opacity: 0, scale: 0.8 }}
-							whileInView={{ opacity: 1, scale: 1 }}
-							viewport={{ once: true }}
-							transition={{ duration: 0.4, delay: index * 0.08 }}
-							whileHover={{ scale: 1.08 }}
-							className="flex flex-col items-center justify-center bg-white/5 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl hover:bg-white/10 transition-all"
-						>
-							<Image
-								src={skill.icon}
-								alt={skill.name}
-								width={38}
-								height={38}
-								className="mb-2 md:mb-3"
-							/>
-							<p className="text-sm font-medium text-gray-200">{skill.name}</p>
-						</motion.div>
+						   <motion.div
+							   key={skill.name}
+							   initial={{ opacity: 0, scale: 0.8 }}
+							   whileInView={{ opacity: 1, scale: 1 }}
+							   viewport={{ once: true }}
+							   transition={{ duration: 0.4, delay: index * 0.08 }}
+							   whileHover={{ scale: 1.08 }}
+							   className="flex flex-col items-center justify-center bg-white/5 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl hover:bg-white/10 transition-all"
+						   >
+							   <div className="flex flex-col items-center w-full">
+								   <Image
+									   src={skill.icon}
+									   alt={skill.name}
+									   width={34}
+									   height={34}
+									   className="mb-1 md:mb-2"
+								   />
+								   <p className="text-xs md:text-sm font-medium text-gray-200 text-center w-full truncate mt-1">
+									   {skill.name}
+								   </p>
+							   </div>
+						   </motion.div>
 					))}
 				</div>
 			</div>

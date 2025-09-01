@@ -4,10 +4,13 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
+
+const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
 
 export default function Navbar() {
     const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     const navItems = [
         { name: 'Works', path: '/works' },
@@ -67,56 +70,25 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    {/* Mobile Menu Button */}
+                    {/* Sidebar Trigger for Mobile */}
                     <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="md:hidden p-2 text-gray-300 hover:text-white"
+                        onClick={() => setSidebarOpen(true)}
+                        className="md:hidden p-2 text-gray-300 hover:text-white focus:outline-none"
+                        aria-label="Open sidebar"
                     >
                         <motion.div
-                            animate={isOpen ? { rotate: 45 } : { rotate: 0 }}
-                            className="w-6 h-6 relative"
+                            whileTap={{ scale: 0.85 }}
+                            className="w-8 h-8 flex items-center justify-center"
                         >
-                            <motion.span
-                                animate={isOpen ? { rotate: 90, y: 0 } : { rotate: 0, y: -8 }}
-                                className="absolute block h-0.5 w-6 bg-current transform transition"
-                            />
-                            <motion.span
-                                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                                className="absolute block h-0.5 w-6 bg-current transform"
-                            />
-                            <motion.span
-                                animate={isOpen ? { rotate: -90, y: 0 } : { rotate: 0, y: 8 }}
-                                className="absolute block h-0.5 w-6 bg-current transform transition"
-                            />
+                            <span className="block w-7 h-0.5 bg-current rounded-full mb-1"></span>
+                            <span className="block w-7 h-0.5 bg-current rounded-full mb-1"></span>
+                            <span className="block w-7 h-0.5 bg-current rounded-full"></span>
                         </motion.div>
                     </button>
                 </div>
-
-                {/* Mobile Menu */}
-                <motion.div
-                    initial={false}
-                    animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-                    className="md:hidden overflow-hidden"
-                >
-                    <div className="pt-4 pb-2 flex flex-col items-end space-y-2 pr-4">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.name}
-                                href={item.path}
-                                onClick={() => setIsOpen(false)}
-                                className={`flex items-center gap-2 py-2 px-4 rounded-full shadow-sm bg-white/5 hover:bg-blue-600/80 text-sm font-semibold transition-all duration-300 ${
-                                    pathname === item.path
-                                        ? 'bg-blue-600/90 text-white' 
-                                        : 'text-gray-200 hover:text-white'
-                                }`}
-                            >
-                                <span className="w-2 h-2 rounded-full bg-blue-400/80" style={{ opacity: pathname === item.path ? 1 : 0 }}></span>
-                                {item.name}
-                            </Link>
-                        ))}
-                    </div>
-                </motion.div>
             </div>
+            {/* Animated Sidebar for Mobile */}
+            <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
         </motion.nav>
     );
 }
