@@ -329,68 +329,144 @@ export default function ProjectsSection() {
       `}</style>
       
       <div className="flex h-screen">
-        {/* Fixed Left Sidebar */}
-        <div ref={leftSidebarRef} className="hidden lg:block fixed left-6 lg:left-12 top-0 w-2/5 xl:w-1/3 h-full z-20">
-          <div className="flex flex-col h-full pt-32 pb-12 px-6 xl:px-8">
-            {/* Project Navigation - Scrollable Container */}
-            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-blue-400/40">
+        {/* Fixed Left Sidebar - Modern Minimalist Design */}
+        <div ref={leftSidebarRef} className="hidden lg:block fixed left-20 lg:left-32 xl:left-40 top-0 w-2/5 xl:w-1/3 h-full z-20">
+          <div className="flex flex-col h-full pt-32 pb-12 px-8 xl:px-12">
+            {/* Project Navigation - Minimalist Vertical Indicators */}
+            <div className="flex-1 flex items-center">
               <motion.div 
                 variants={staggerContainer}
                 initial="initial"
                 animate={isInView ? "animate" : "initial"}
-                className="space-y-3 max-w-xs mx-auto mt-24"
+                className="w-full max-w-sm"
               >
-            {projects.map((project, index) => {
-              const colors = getColorClasses(project.color);
-              const isSelected = selectedProject === index;
-              
-              return (
-                <motion.button
-                  key={project.id}
+                {/* Header */}
+                <motion.div
                   variants={fadeInUp}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  onClick={() => scrollToProject(index)}
-                  className={`w-full text-left p-4 rounded-xl transition-all duration-300 border group ${
-                    isSelected
-                      ? `${colors.border} ${colors.bg} border-opacity-50 bg-opacity-10`
-                      : 'border-white/10 hover:border-white/20 hover:bg-white/5'
-                  }`}
-                  aria-label={`Navigate to ${project.title}`}
+                  className="mb-12"
                 >
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className={`w-2 h-2 rounded-full transition-colors ${
-                      isSelected ? colors.text : 'bg-gray-500 group-hover:bg-white'
-                    }`} />
-                    <span className="text-xs text-gray-500 font-medium">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                  </div>
-                  <h3 className={`font-semibold text-xs mb-1 transition-colors ${
-                    isSelected ? colors.text : 'text-white group-hover:text-blue-400'
-                  }`}>
-                    {project.title}
+                  <h3 className="text-sm font-light text-white/60 tracking-[0.2em] uppercase mb-4">
+                    Projects
                   </h3>
-                  <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                      colors.text
-                    } ${colors.bg} bg-opacity-20`}>
-                      {project.category}
+                  <div className="w-8 h-px bg-gradient-to-r from-white/40 to-transparent"></div>
+                </motion.div>
+
+                {/* Project List */}
+                <div className="space-y-6">
+                  {projects.map((project, index) => {
+                    const colors = getColorClasses(project.color);
+                    const isSelected = selectedProject === index;
+                    
+                    return (
+                      <motion.div
+                        key={project.id}
+                        variants={fadeInUp}
+                        transition={{ duration: 0.4, delay: index * 0.08 }}
+                        className="relative group"
+                      >
+                        {/* Active Indicator Line */}
+                        <div className={`absolute -left-6 top-0 w-0.5 h-full transition-all duration-500 ${
+                          isSelected 
+                            ? `bg-gradient-to-b ${colors.text.replace('text-', 'from-')} to-transparent opacity-100` 
+                            : 'bg-white/20 opacity-0 group-hover:opacity-30'
+                        }`} />
+                        
+                        <motion.button
+                          onClick={() => scrollToProject(index)}
+                          className="w-full text-left transition-all duration-300 group/btn"
+                          whileHover={{ x: 4 }}
+                          aria-label={`Navigate to ${project.title}`}
+                        >
+                          {/* Project Number & Title Row */}
+                          <div className="flex items-baseline gap-4 mb-1">
+                            <span className={`text-xs font-mono transition-colors duration-300 ${
+                              isSelected 
+                                ? colors.text + ' opacity-100' 
+                                : 'text-white/40 group-hover/btn:text-white/70'
+                            }`}>
+                              {String(index + 1).padStart(2, '0')}
+                            </span>
+                            <h4 className={`font-medium transition-all duration-300 ${
+                              isSelected 
+                                ? 'text-white text-lg' 
+                                : 'text-white/70 text-base group-hover/btn:text-white group-hover/btn:text-lg'
+                            }`}>
+                              {project.title}
+                            </h4>
+                          </div>
+                          
+                          {/* Project Meta */}
+                          <div className="flex items-center gap-3 ml-8">
+                            <span className={`text-xs transition-colors duration-300 ${
+                              isSelected 
+                                ? 'text-white/80' 
+                                : 'text-white/40 group-hover/btn:text-white/60'
+                            }`}>
+                              {project.category}
+                            </span>
+                            <div className={`w-1 h-1 rounded-full transition-colors duration-300 ${
+                              isSelected 
+                                ? 'bg-white/60' 
+                                : 'bg-white/20 group-hover/btn:bg-white/40'
+                            }`} />
+                            <span className={`text-xs font-light transition-colors duration-300 ${
+                              isSelected 
+                                ? 'text-white/60' 
+                                : 'text-white/30 group-hover/btn:text-white/50'
+                            }`}>
+                              {project.year}
+                            </span>
+                          </div>
+
+                          {/* Subtle Description - Only show on hover or active */}
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ 
+                              opacity: isSelected ? 1 : 0, 
+                              height: isSelected ? 'auto' : 0 
+                            }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <p className="text-xs text-white/50 leading-relaxed mt-2 ml-8 pr-4">
+                              {project.subtitle}
+                            </p>
+                          </motion.div>
+                        </motion.button>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                {/* Progress Indicator */}
+                <motion.div
+                  variants={fadeInUp}
+                  transition={{ delay: 0.6 }}
+                  className="mt-12 pt-8 border-t border-white/10"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-px bg-white/10 rounded-full overflow-hidden">
+                      <motion.div 
+                        className="h-full bg-gradient-to-r from-blue-400 to-purple-400"
+                        initial={{ width: '0%' }}
+                        animate={{ 
+                          width: `${((selectedProject + 1) / projects.length) * 100}%` 
+                        }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                      />
+                    </div>
+                    <span className="text-xs font-mono text-white/40">
+                      {selectedProject + 1}/{projects.length}
                     </span>
-                    <span className="text-xs text-gray-500">{project.year}</span>
                   </div>
-                </motion.button>
-              );
-            })}
+                </motion.div>
               </motion.div>
             </div>
           </div>
         </div>
 
       {/* Right Column - Scrollable Content */}
-      <div className="w-full lg:ml-[calc(40%-1.5rem)] xl:ml-[calc(33.333333%-3rem)] lg:w-3/5 xl:w-2/3 relative">
+      <div className="w-full lg:ml-[calc(40%+4rem)] xl:ml-[calc(33.333333%+6rem)] lg:w-3/5 xl:w-2/3 relative">
         <div 
           ref={scrollRef}
           className="h-screen overflow-y-auto right-edge-scrollbar" 
