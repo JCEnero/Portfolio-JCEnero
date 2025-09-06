@@ -40,15 +40,15 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
     if (mq.addEventListener) {
       mq.addEventListener("change", handler as (e: MediaQueryListEvent) => void);
     } else {
-      // @ts-ignore - Safari
-      mq.addListener(handler);
+      // Legacy Safari support
+      (mq as any).addListener(handler);
     }
     return () => {
       if (mq.removeEventListener) {
         mq.removeEventListener("change", handler as (e: MediaQueryListEvent) => void);
       } else {
-        // @ts-ignore - Safari
-        mq.removeListener(handler);
+        // Legacy Safari support
+        (mq as any).removeListener(handler);
       }
     };
   }, [onClose]);
@@ -157,7 +157,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
               }}
               className="px-6 space-y-2"
             >
-              {navItems.map((item, index) => {
+              {navItems.map((item) => {
                 const active = pathname === item.path;
                 return (
                   <motion.div

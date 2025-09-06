@@ -27,7 +27,7 @@ export default function ContactSection() {
 			await navigator.clipboard.writeText('johncarlenero.dev@gmail.com');
 			setCopyStatus('Email copied!');
 			setTimeout(() => setCopyStatus(''), 2000);
-		} catch (err) {
+		} catch {
 			setCopyStatus('Failed to copy');
 			setTimeout(() => setCopyStatus(''), 2000);
 		}
@@ -100,10 +100,10 @@ export default function ContactSection() {
 								className="text-left"
 							>
 								<h2 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-									Let's Create Something Amazing
+									Let&apos;s Create Something Amazing
 								</h2>
 								<p className="text-gray-400 mb-6 text-sm md:text-base leading-relaxed">
-									Ready to turn your ideas into reality? I'm here to help bring your vision to life.
+									Ready to turn your ideas into reality? I&apos;m here to help bring your vision to life.
 								</p>
 								
 								{/* Contact Details */}
@@ -169,7 +169,7 @@ export default function ContactSection() {
 											className={`absolute top-full left-0 right-0 mt-2 bg-gray-800/95 backdrop-blur-sm border border-gray-700/50 rounded-xl shadow-xl z-50 ${showContactOptions ? 'pointer-events-auto' : 'pointer-events-none'}`}
 										>
 											<div className="p-2">
-												{contactOptions.map((option, index) => (
+												{contactOptions.map((option) => (
 													<button
 														key={option.name}
 														onClick={() => {

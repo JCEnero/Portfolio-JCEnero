@@ -4,6 +4,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';
 
+interface Author {
+    name: string;
+    avatar: string;
+    title: string;
+}
+
+interface BlogPost {
+    id: number;
+    author: Author;
+    date: Date;
+    content: string;
+    tags: string[];
+    type: string;
+    pinned?: boolean;
+    image?: string;
+}
+
 export default function Blog() {
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -17,7 +34,7 @@ export default function Blog() {
         });
     };
 
-    const posts = [
+    const posts: BlogPost[] = [
         {
             id: 0,
             author: {
@@ -26,7 +43,7 @@ export default function Blog() {
                 title: "Student & Aspiring Developer"
             },
             date: new Date('2025-9-7'), // 9th grade, when it all started
-            content: "How It All Started\n\nBack when I was in 9th grade at Lagro High School, I was just 14 years old with no idea where life would take me. In our TLE subject, we were asked to choose electives. For some reason, I was automatically placed in ICT (Information and Communications Technology) — and honestly, I didn't think much of it at first.\n\nLittle did I know, that moment would change my life.\n\nOur lessons started with the basics of HTML and CSS. At first, I was just doing the usual activities, experimenting with tags and styles. But then I decided to try something fun — I attempted to recreate Facebook's design using only HTML and CSS.\n\nLooking back, it was far from perfect (honestly, it looked pretty ugly compared to the real thing). But at that time, when my friends and classmates saw it, they were amazed and kept asking me how I did it. The truth is, I was just playing around — messing with CSS colors and simple HTML structures.\n\nThat little experiment made me realize something:\nI wasn't just doing schoolwork… I was building something from nothing.\n\nAnd that's where my passion for web development began. What started as a class assignment turned into the foundation of a journey I'm still on today.",
+            content: "How It All Started\n\nBack when I was in 9th grade at Lagro High School, I was just 14 years old with no idea where life would take me. In our TLE subject, we were asked to choose electives. For some reason, I was automatically placed in ICT (Information and Communications Technology) — and honestly, I didn&apos;t think much of it at first.\n\nLittle did I know, that moment would change my life.\n\nOur lessons started with the basics of HTML and CSS. At first, I was just doing the usual activities, experimenting with tags and styles. But then I decided to try something fun — I attempted to recreate Facebook&apos;s design using only HTML and CSS.\n\nLooking back, it was far from perfect (honestly, it looked pretty ugly compared to the real thing). But at that time, when my friends and classmates saw it, they were amazed and kept asking me how I did it. The truth is, I was just playing around — messing with CSS colors and simple HTML structures.\n\nThat little experiment made me realize something:\nI wasn&apos;t just doing schoolwork… I was building something from nothing.\n\nAnd that&apos;s where my passion for web development began. What started as a class assignment turned into the foundation of a journey I&apos;m still on today.",
             tags: ["HTML", "CSS", "First Steps", "School"],
             type: "story",
             pinned: true
@@ -155,14 +172,14 @@ export default function Blog() {
                                         </div>
 
                                         {/* Post Image */}
-                                        {(post as any).image && (
+                                        {post.image && (
                                             <div 
                                                 className="mb-4 rounded-xl overflow-hidden cursor-pointer"
-                                                onClick={() => setSelectedImage((post as any).image)}
+                                                onClick={() => setSelectedImage(post.image!)}
                                             >
                                                 <div className="relative h-64 w-full">
                                                     <Image
-                                                        src={(post as any).image}
+                                                        src={post.image}
                                                         alt="Post image"
                                                         fill
                                                         className="object-cover hover:scale-105 transition-transform duration-500"
@@ -255,14 +272,14 @@ export default function Blog() {
                                 </div>
 
                                 {/* Post Image */}
-                                {(post as any).image && (
+                                {post.image && (
                                     <div 
                                         className="mb-4 rounded-xl overflow-hidden cursor-pointer"
-                                        onClick={() => setSelectedImage((post as any).image)}
+                                        onClick={() => setSelectedImage(post.image!)}
                                     >
                                         <div className="relative h-64 w-full">
                                             <Image
-                                                src={(post as any).image}
+                                                src={post.image}
                                                 alt="Post image"
                                                 fill
                                                 className="object-cover hover:scale-105 transition-transform duration-500"

@@ -6,7 +6,7 @@ import ClientLayout from "./components/ClientLayout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "John Carl Enero - Portfolio",
+  title: "John Carl Enero | JCE",
   description: "Full Stack Developer & DevOps Engineer",
 };
 
