@@ -1,186 +1,565 @@
-
 'use client';
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 
+// Types for better type safety
+interface Project {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  fullDescription: string;
+  tech: string[];
+  category: string;
+  github: string;
+  demo: string;
+  image: string;
+  status: string;
+  year: string;
+  impact: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+  };
+  color: 'emerald' | 'blue' | 'orange' | 'purple';
+}
+
+// Animation variants moved outside component to prevent re-creation
+const fadeInUp = {
+  initial: { opacity: 0, y: 50 },
+  animate: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
 export default function ProjectsSection() {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const ref = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const leftSidebarRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const [selectedProject, setSelectedProject] = useState(0);
 
-    const projects = [
-        {
-            title: 'AI-Integrated IoT Solution for Sustainable Farming',
-            description: 'Created an AI-powered IoT irrigation system with smart sensors and predictive algorithms, optimizing water usage by 37%, boosting crop yield efficiency by 22%, and reducing manual labor needs by 40%.',
-            tech: ['React', 'Firebase', 'Python', 'C++', 'Arduino', 'HTML', 'CSS'],
-            github: 'https://github.com/JCEnero',
-            demo: 'https://irriqcu.web.app/',
-            image: '/projects/Irriqcu-project.png',
-            status: 'Live'
-        },
-        {
-            title: 'Interactive 3D Campus Navigation Guide (Kiosk-Based)',
-            description: 'Created a kiosk-based 3D web app with VB.NET and Three.js, guiding visitors across 8 campus buildings, improving navigation speed by 2x, and cutting manual assistance needs by 40%.',
-            tech: ['Three.js', 'Node.js', 'VB.NET', 'Blender'],
-            github: 'https://github.com/JCEnero',
-            demo: 'https://your-campus-navigation-demo.com',
-            image: '/projects/findme-project.png',
-            status: 'Completed'
-        },
-        {
-            title: 'Real-time Disaster Relief Mapping System',
-            description: 'A web app that locates nearby shelters, food, and medical aid during emergencies, cutting search time by 65% and boosting relief efficiency by 40%.',
-            tech: ['Vue.js', 'Python', 'Flask', 'Chart.js'],
-            github: 'https://github.com/JCEnero',
-            demo: 'https://your-weather-demo.com',
-            image: '/projects/development.png',
-            status: 'Development'
-        },
-        {
-            title: 'AI-Powered Automated Budget & Expense Planner',
-            description: 'An AI-powered web-based financial management system that automates expense tracking and budgeting, helping users cut costs by 25%, boost savings by 20%, and reduce manual budgeting by 40% through predictive insights and smart recommendations.',
-            tech: ['React', 'Python', 'TensorFlow', 'FastAPI'],
-            github: 'https://github.com/JCEnero',
-            demo: 'https://your-ai-demo.com',
-            image: '/projects/development.png',
-            status: 'Development'
-        },
-    ];
+  // Function to get tech icon path
+  const getTechIcon = useCallback((tech: string): string | null => {
+    const techIconMap: { [key: string]: string } = {
+      'React': '/icons/react.svg',
+      'Node.js': '/icons/nodejs.svg',
+      'Next.js': '/icons/Next.js.svg',
+      'TensorFlow': '/icons/TensorFlow.svg',
+      'IoT Sensors': '/icons/javascript.svg', // Generic tech icon
+      'MongoDB': '/icons/mongodb.svg',
+      'Three.js': '/icons/Three.js.svg',
+      'WebGL': '/icons/javascript.svg',
+      'Firebase': '/icons/firebase.svg',
+      'Tailwind CSS': '/icons/tailwind.svg',
+      'Tailwind': '/icons/tailwind.svg',
+      'Chart.js': '/icons/javascript.svg',
+      'Express': '/icons/express.svg',
+      'TypeScript': '/icons/javascript.svg', // Using JS icon for TypeScript
+      'Framer Motion': '/icons/react.svg',
+      'Vue.js': '/icons/javascript.svg',
+      'Laravel': '/icons/php.svg',
+      'MySQL': '/icons/sql.svg',
+      'Vercel': '/icons/javascript.svg',
+      'CSS': '/icons/css3.svg',
+      'CSS3': '/icons/css3.svg',
+      'HTML': '/icons/html5.svg',
+      'HTML5': '/icons/html5.svg',
+      'JavaScript': '/icons/javascript.svg',
+      'JS': '/icons/javascript.svg',
+      'Python': '/icons/python.svg',
+      'PHP': '/icons/php.svg',
+      'Java': '/icons/java.svg',
+      'Git': '/icons/git.svg',
+      'Docker': '/icons/docker.svg',
+      'AWS': '/icons/aws.svg',
+      'Azure': '/icons/azure.svg',
+      'VB.NET': '/icons/NET core.svg',
+      '.NET': '/icons/NET core.svg',
+      'Blender': '/icons/Blender.svg'
+    };
+    
+    return techIconMap[tech] || null;
+  }, []);
 
-    return (
-     <section ref={ref} className="pt-40 pb-32 relative overflow-hidden bg-gradient-to-br from-black via-gray-950 to-black"
->
-            <div className="container mx-auto px-6">
-                {/* Title Section with more spacing */}
-                <div className="text-center mb-24">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.8 }}
-                        className="text-4xl md:text-6xl font-bold mb-12"
-                    >
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400">
-                            Selected Works
-                        </span>
-                    </motion.h2>
+  // Memoized projects data to prevent re-creation on every render
+  const projects: Project[] = useMemo(() => [
+    {
+      id: 1,
+      title: 'IrriQCU',
+      subtitle: 'Smart Agriculture Platform',
+      description: 'Revolutionary IoT system leveraging AI for precision agriculture',
+      fullDescription: 'An advanced AI-powered IoT irrigation system that combines smart sensors, predictive algorithms, and machine learning to optimize agricultural processes. This comprehensive solution monitors soil moisture, weather patterns, and crop health in real-time, resulting in 37% water optimization, 22% yield increase, and 40% reduction in manual labor.',
+      tech: ['React', 'JS', 'TensorFlow', 'Firebase'],
+      category: 'IoT & AI',
+      github: 'https://github.com/JCEnero/Irrigation-System',
+      demo: 'https://irrigationqcu.vercel.app/',
+      image: '/projects/Irriqcu-project.png',
+      status: 'Live',
+      year: '2024',
+      impact: {
+        primary: '37% Water Saved',
+        secondary: '22% Yield Increase',
+        tertiary: '40% Less Labor'
+      },
+      color: 'emerald'
+    },
+    {
+      id: 2,
+      title: 'FindMe',
+      subtitle: '3D Interactive Navigation Guide',
+      description: 'KIOSK-based navigation system for Quezon City University Main Campus',
+      fullDescription: 'A sophisticated 3D interactive navigation guide designed specifically for Quezon City University Main Campus. This KIOSK-based system provides real-time wayfinding, building information, and campus services location to help students, faculty, and visitors navigate the campus efficiently.',
+      tech: ['VB.NET', 'JS', 'Three.js', 'Blender', 'HTML5', 'CSS3'],
+      category: 'Navigation',
+      github: 'https://github.com/JCEnero/FindMe-WebApp',
+      demo: 'https://find-me-web-app.vercel.app',
+      image: '/projects/findme-project.png',
+      status: 'Live',
+      year: '2024',
+      impact: {
+        primary: '3D Interactive',
+        secondary: 'KIOSK Ready',
+        tertiary: 'Campus Wide'
+      },
+      color: 'blue'
+    },
+    {
+      id: 3,
+      title: 'Budgetsy',
+      subtitle: 'Smart Personal Finance Tracker',
+      description: 'Personal finance tracker that helps users monitor income and expenses efficiently',
+      fullDescription: 'Developed a personal finance tracker web app that helped users monitor income and expenses, leading to 25% faster financial logging compared to manual spreadsheets. Implemented data visualization charts for spending categories, enabling users to identify and reduce unnecessary expenses by an average of 15% per month. Designed a secure account management system with user authentication, ensuring 100% data privacy and improving user trust during financial tracking.',
+      tech: ['React', 'Node.js', 'Chart.js', 'MongoDB', 'Express'],
+      category: 'Finance',
+      github: 'https://github.com/JCEnero/Budgetsy',
+      demo: 'https://budgetsy-app.vercel.app',
+      image: '/projects/development.png',
+      status: 'Live',
+      year: '2025',
+      impact: {
+        primary: '25% Faster Logging',
+        secondary: '15% Expense Cut',
+        tertiary: '100% Data Privacy'
+      },
+      color: 'orange'
+    },
+    {
+      id: 4,
+      title: 'Portfolio',
+      subtitle: 'Personal Branding Solution',
+      description: 'Modern portfolio showcasing development expertise and projects',
+      fullDescription: 'A meticulously crafted personal portfolio that serves as both a showcase of technical abilities and a professional brand statement. Built with cutting-edge technologies and optimized for performance, accessibility, and user experience across all devices.',
+      tech: ['Next.js', 'TypeScript', 'Framer Motion', 'Tailwind'],
+      category: 'Portfolio',
+      github: 'https://github.com/JCEnero/Portfolio',
+      demo: 'https://portfolio-website.vercel.app',
+      image: '/code.jpg',
+      status: 'Live',
+      year: '2024',
+      impact: {
+        primary: '98% Performance',
+        secondary: '100% Accessibility',
+        tertiary: 'Mobile Optimized'
+      },
+      color: 'purple'
+    },
+  ], []);
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto"
-                    >
-                        Showcasing innovative solutions and technical excellence
-                    </motion.p>
-                </div>
+  // Memoized color classes to prevent recalculation
+  const getColorClasses = useCallback((color: Project['color']) => {
+    const colorMap = {
+      emerald: {
+        bg: 'from-emerald-500/20 via-emerald-400/10 to-transparent',
+        border: 'border-emerald-500/30',
+        text: 'text-emerald-400',
+        glow: 'shadow-emerald-500/20'
+      },
+      blue: {
+        bg: 'from-blue-500/20 via-blue-400/10 to-transparent',
+        border: 'border-blue-500/30',
+        text: 'text-blue-400',
+        glow: 'shadow-blue-500/20'
+      },
+      orange: {
+        bg: 'from-orange-500/20 via-orange-400/10 to-transparent',
+        border: 'border-orange-500/30',
+        text: 'text-orange-400',
+        glow: 'shadow-orange-500/20'
+      },
+      purple: {
+        bg: 'from-purple-500/20 via-purple-400/10 to-transparent',
+        border: 'border-purple-500/30',
+        text: 'text-purple-400',
+        glow: 'shadow-purple-500/20'
+      }
+    };
+    return colorMap[color];
+  }, []);
 
-                {/* Projects Grid */}
-                <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                    {projects.map((project, index) => (
-                        <motion.div
-                            key={project.title}
-                            initial={{ opacity: 0, y: 60 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.8, delay: 0.5 + index * 0.2 }}
-                            whileHover={{ 
-                                scale: 1.02,
-                                transition: { duration: 0.3 }
-                            }}
-                            className="group bg-gray-900/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800/50 hover:border-gray-700/50 transition-all duration-500"
-                        >
-                            {/* Project Image */}
-                            <div className="relative h-48 bg-gradient-to-br from-blue-900/20 to-purple-900/20 overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent z-10"></div>
-                                
-                                {/* Status Badge */}
-                                <div className="absolute top-4 right-4 z-20">
-                                    <span className={`px-3 py-1 text-xs font-semibold rounded-full shadow-lg ring-2 ring-black/30 backdrop-blur-sm
-                                        ${
-                                            project.status === 'Live'
-                                                ? 'bg-green-600 text-white border border-green-400'
-                                                : project.status === 'Development'
-                                                ? 'bg-yellow-500 text-black border border-yellow-300'
-                                                : project.status === 'Completed'
-                                                ? 'bg-purple-700 text-white border border-purple-400'
-                                                : 'bg-blue-600 text-white border border-blue-400'
-                                        }`}>
-                                        {project.status}
-                                    </span>
-                                </div>
+  // Optimized scroll handler with throttling
+  const handleScroll = useCallback(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
 
-                                {/* Project image */}
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className="absolute inset-0 w-full h-full object-cover object-top z-0"
-                                    style={{ objectFit: 'cover', objectPosition: 'top' }}
-                                    sizes="(max-width: 768px) 100vw, 900px"
-                                />
-                            </div>
+    const projectSections = scrollContainer.querySelectorAll('[data-project-index]');
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const containerCenter = containerRect.height / 2;
+    
+    let currentProject = 0;
+    projectSections.forEach((section, index) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= containerCenter && rect.bottom >= containerCenter) {
+        currentProject = index;
+      }
+    });
+    
+    setSelectedProject(currentProject);
+  }, []);
 
-                            <div className="p-6">
-                                {/* Project Title */}
-                                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
-                                    {project.title}
-                                </h3>
+  // Scroll to project function
+  const scrollToProject = useCallback((index: number) => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
 
-                                {/* Description */}
-                                <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                                    {project.description}
-                                </p>
+    const projectSection = scrollContainer.querySelector(`[data-project-index="${index}"]`);
+    if (!projectSection) return;
 
-                                {/* Tech Stack */}
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {project.tech.map((tech) => (
-                                        <span
-                                            key={tech}
-                                            className="px-2 py-1 bg-gray-800/50 text-blue-400 text-xs rounded-md border border-blue-400/20"
-                                        >
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const elementRect = projectSection.getBoundingClientRect();
+    const scrollTop = scrollContainer.scrollTop;
+    const targetScroll = scrollTop + elementRect.top - containerRect.top - (containerRect.height / 2) + (elementRect.height / 2);
+    
+    scrollContainer.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth'
+    });
+  }, []);
 
-                                {/* Links */}
-                                <div className="flex space-x-4">
-                                    <motion.a
-                                        href={project.github}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300"
-                                    >
-                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                                        </svg>
-                                        <span className="text-sm">Code</span>
-                                    </motion.a>
+  // Optimized scroll event listener
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
 
-                                    <motion.a
-                                        href={project.demo}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="flex items-center space-x-2 text-gray-400 hover:text-blue-400 transition-colors duration-300"
-                                    >
-                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                        </svg>
-                                        <span className="text-sm">Demo</span>
-                                    </motion.a>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledScrollHandler = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
 
+    scrollContainer.addEventListener('scroll', throttledScrollHandler, { passive: true });
+    return () => scrollContainer.removeEventListener('scroll', throttledScrollHandler);
+  }, [handleScroll]);
 
+  // Left sidebar scroll synchronization
+  useEffect(() => {
+    const leftSidebar = leftSidebarRef.current;
+    const rightContent = scrollRef.current;
+    
+    if (!leftSidebar || !rightContent) return;
+
+    const handleLeftSidebarScroll = (e: WheelEvent) => {
+      // Prevent default left sidebar scrolling
+      e.preventDefault();
+      
+      // Apply scroll to the right content area
+      rightContent.scrollTop += e.deltaY;
+    };
+
+    leftSidebar.addEventListener('wheel', handleLeftSidebarScroll, { passive: false });
+    return () => leftSidebar.removeEventListener('wheel', handleLeftSidebarScroll);
+  }, []);
+
+  return (
+    <section ref={ref} className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-slate-950 px-6 lg:px-12 relative">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-slate-950" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,69,219,0.08),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(59,130,246,0.06),transparent_80%)]" />
+      
+      <style jsx global>{`
+        .right-edge-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        .right-edge-scrollbar::-webkit-scrollbar-track {
+          background: rgba(39, 39, 42, 0.3);
+          border-radius: 4px;
+        }
+        
+        .right-edge-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(59, 130, 246, 0.6);
+          border-radius: 4px;
+          border: 2px solid rgba(39, 39, 42, 0.3);
+        }
+        
+        .right-edge-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(135deg, #60a5fa, #a78bfa);
+        }
+        
+        .right-edge-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #3b82f6 rgba(39, 39, 42, 0.3);
+        }
+        
+        /* Position scrollbar at the very right edge */
+        .scrollbar-container {
+          position: relative;
+        }
+        
+        .scrollbar-container::-webkit-scrollbar {
+          position: absolute;
+          right: 0;
+        }
+      `}</style>
+      
+      <div className="flex h-screen">
+        {/* Fixed Left Sidebar */}
+        <div ref={leftSidebarRef} className="hidden lg:block fixed left-6 lg:left-12 top-0 w-2/5 xl:w-1/3 h-full z-20">
+          <div className="flex flex-col h-full pt-24 pb-12 px-6 xl:px-8">
+            {/* Project Navigation - Scrollable Container */}
+            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-blue-400/40">
+              <motion.div 
+                variants={staggerContainer}
+                initial="initial"
+                animate={isInView ? "animate" : "initial"}
+                className="space-y-3 max-w-xs mx-auto mt-24"
+              >
+            {projects.map((project, index) => {
+              const colors = getColorClasses(project.color);
+              const isSelected = selectedProject === index;
+              
+              return (
+                <motion.button
+                  key={project.id}
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  onClick={() => scrollToProject(index)}
+                  className={`w-full text-left p-4 rounded-xl transition-all duration-300 border group ${
+                    isSelected
+                      ? `${colors.border} ${colors.bg} border-opacity-50 bg-opacity-10`
+                      : 'border-white/10 hover:border-white/20 hover:bg-white/5'
+                  }`}
+                  aria-label={`Navigate to ${project.title}`}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`w-2 h-2 rounded-full transition-colors ${
+                      isSelected ? colors.text : 'bg-gray-500 group-hover:bg-white'
+                    }`} />
+                    <span className="text-xs text-gray-500 font-medium">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h3 className={`font-semibold text-xs mb-1 transition-colors ${
+                    isSelected ? colors.text : 'text-white group-hover:text-blue-400'
+                  }`}>
+                    {project.title}
+                  </h3>
+                  <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">
+                    {project.description}
+                  </p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                      colors.text
+                    } ${colors.bg} bg-opacity-20`}>
+                      {project.category}
+                    </span>
+                    <span className="text-xs text-gray-500">{project.year}</span>
+                  </div>
+                </motion.button>
+              );
+            })}
+              </motion.div>
             </div>
-        </section>
-    );
+          </div>
+        </div>
+
+      {/* Right Column - Scrollable Content */}
+      <div className="w-full lg:ml-[calc(40%-1.5rem)] xl:ml-[calc(33.333333%-3rem)] lg:w-3/5 xl:w-2/3 relative">
+        <div 
+          ref={scrollRef}
+          className="h-screen overflow-y-auto right-edge-scrollbar" 
+          style={{
+            marginRight: 'calc(-1 * (100vw - 100%))',
+            paddingRight: 'calc(100vw - 100%)',
+            width: 'calc(100% + (100vw - 100%))'
+          }}
+        >
+          <div className="pt-48 pb-12 px-6 lg:px-8" style={{
+            marginRight: '3rem',
+            paddingRight: '0'
+          }}>
+            {/* Main Title */}
+            <div className="mb-12">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6 }}
+                className="text-4xl sm:text-5xl lg:text-6xl font-light text-white tracking-wider mb-4"
+              >
+                Works
+              </motion.h2>
+              <div className="w-12 h-px bg-white/30 mb-6"></div>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-lg text-zinc-300 leading-relaxed max-w-2xl"
+              >
+                A showcase of my projects and development work. Each project represents a unique challenge and learning experience in my journey as a developer.
+              </motion.p>
+            </div>
+
+            {/* Projects List */}
+            <div className="space-y-20">
+              {projects.map((project, index) => {
+                const colors = getColorClasses(project.color);
+                
+                return (
+                  <motion.div
+                    key={project.id}
+                    data-project-index={index}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: index * 0.2 }}
+                    className="relative"
+                  >
+                    {/* Project Card */}
+                    <div className="relative overflow-hidden rounded-2xl lg:rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20">
+                      {/* Project Image */}
+                      <div className="relative h-64 sm:h-80 lg:h-96 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
+                        
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover object-top transition-transform duration-700 hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 70vw"
+                          priority={index < 2} // Priority loading for first 2 images
+                        />
+
+                        {/* Status Badge */}
+                        <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
+                          <div className="px-3 py-1.5 sm:px-4 sm:py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/20">
+                            <span className="text-xs text-gray-300">{project.category}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Content Section */}
+                      <div className="p-6 sm:p-8 lg:p-12">
+                        <div className="mb-6">
+                          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 leading-tight">
+                            {project.title}
+                          </h2>
+                          <p className="text-lg sm:text-xl text-gray-400 font-medium">
+                            {project.subtitle}
+                          </p>
+                        </div>
+
+                        <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">
+                          {project.fullDescription}
+                        </p>
+
+                        {/* Tech Stack */}
+                        <div className="mb-6 sm:mb-8">
+                          <div className="flex flex-wrap gap-3 sm:gap-4">
+                            {project.tech.map((tech) => {
+                              const iconPath = getTechIcon(tech);
+                              return (
+                                <div
+                                  key={tech}
+                                  className="group relative"
+                                >
+                                  {iconPath ? (
+                                    <div className="w-8 h-8 sm:w-10 sm:h-10 p-2 bg-gradient-to-r from-white/10 to-white/5 rounded-xl border border-white/20 hover:bg-white/20 hover:scale-110 transition-all duration-300 flex items-center justify-center">
+                                      <Image
+                                        src={iconPath}
+                                        alt={tech}
+                                        width={24}
+                                        height={24}
+                                        className="w-full h-full object-contain"
+                                      />
+                                    </div>
+                                  ) : (
+                                    <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-white/10 to-white/5 text-white text-xs sm:text-sm rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                      {tech}
+                                    </span>
+                                  )}
+                                  
+                                  {/* Tooltip */}
+                                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-black/90 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                                    {tech}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                          <motion.a
+                            href={project.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.02, y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                            className={`flex items-center justify-center gap-3 px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r ${colors.bg} text-white rounded-xl sm:rounded-2xl font-semibold border ${colors.border} hover:shadow-2xl ${colors.glow} transition-all duration-300 group/btn`}
+                          >
+                            <span>View Live Project</span>
+                            <svg 
+                              className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </motion.a>
+
+                          <motion.a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.02, y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="flex items-center justify-center gap-3 px-6 py-3 sm:px-8 sm:py-4 border border-white/30 text-white rounded-xl sm:rounded-2xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+                          >
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                              <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            <span>View Source</span>
+                          </motion.a>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

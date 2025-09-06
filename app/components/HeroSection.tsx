@@ -206,9 +206,11 @@ export default function HeroSection() {
             </motion.nav>
 
             {/* Background Elements */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-slate-950" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,69,219,0.08),transparent_70%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(59,130,246,0.06),transparent_80%)]" />
             <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(17,24,39,0.7),rgba(0,0,0,1))]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(17,24,39,0.3),rgba(0,0,0,0.8))]" />
             </div>
 
             {/* Main Content */}
