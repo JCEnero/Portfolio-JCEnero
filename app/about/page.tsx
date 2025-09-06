@@ -82,10 +82,36 @@ export default function About() {
     ];
 
     const skillCategories = {
-        'Frontend': ['JavaScript', 'React.js', 'HTML5', 'CSS3', 'Tailwind'],
-        'Backend': ['Node.js', 'Express.js', 'Python', 'Java', 'PHP'],
-        'Database': ['MongoDB', 'OracleDB', 'SQL', 'Firebase'],
-        'Tools': ['Docker', 'Git', 'Azure', 'AWS']
+        'Frontend Development': [
+            { name: 'JavaScript', icon: '/icons/javascript.svg', color: 'from-yellow-400 to-yellow-600' },
+            { name: 'React.js', icon: '/icons/react.svg', color: 'from-cyan-400 to-blue-500' },
+            { name: 'Next.js', icon: '/icons/Next.js.svg', color: 'from-gray-400 to-gray-600' },
+            { name: 'HTML5', icon: '/icons/html5.svg', color: 'from-orange-400 to-red-500' },
+            { name: 'CSS3', icon: '/icons/css3.svg', color: 'from-blue-400 to-blue-600' },
+            { name: 'Tailwind', icon: '/icons/tailwind.svg', color: 'from-teal-400 to-cyan-500' }
+        ],
+        'Backend Development': [
+            { name: 'Node.js', icon: '/icons/nodejs.svg', color: 'from-green-400 to-green-600' },
+            { name: 'Express.js', icon: '/icons/express.svg', color: 'from-gray-500 to-gray-700' },
+            { name: 'Python', icon: '/icons/python.svg', color: 'from-blue-400 to-yellow-400' },
+            { name: 'Java', icon: '/icons/java.svg', color: 'from-red-500 to-orange-600' },
+            { name: 'PHP', icon: '/icons/php.svg', color: 'from-indigo-400 to-purple-500' },
+            { name: '.NET Core', icon: '/icons/NET core.svg', color: 'from-purple-500 to-blue-600' }
+        ],
+        'Database & Cloud': [
+            { name: 'MongoDB', icon: '/icons/mongodb.svg', color: 'from-green-500 to-green-700' },
+            { name: 'SQL', icon: '/icons/sql.svg', color: 'from-blue-500 to-indigo-600' },
+            { name: 'Firebase', icon: '/icons/firebase.svg', color: 'from-yellow-400 to-orange-500' },
+            { name: 'Azure', icon: '/icons/azure.svg', color: 'from-blue-400 to-blue-600' },
+            { name: 'AWS', icon: '/icons/aws.svg', color: 'from-orange-400 to-yellow-500' }
+        ],
+        'Tools & Technologies': [
+            { name: 'Docker', icon: '/icons/docker.svg', color: 'from-blue-400 to-blue-600' },
+            { name: 'Git', icon: '/icons/git.svg', color: 'from-red-500 to-orange-600' },
+            { name: 'Three.js', icon: '/icons/Three.js.svg', color: 'from-gray-400 to-gray-600' },
+            { name: 'TensorFlow', icon: '/icons/TensorFlow.svg', color: 'from-orange-400 to-yellow-500' },
+            { name: 'Blender', icon: '/icons/Blender.svg', color: 'from-blue-500 to-orange-500' }
+        ]
     };
 
     interface ExperienceCardProps {
@@ -314,7 +340,7 @@ export default function About() {
                             width: 'calc(100% + (100vw - 100%))'
                         }}
                     >
-                        <div className="pt-48 pb-12 px-6 lg:px-8" style={{
+                        <div className="pt-32 pb-12 px-6 lg:px-8" style={{
                             marginRight: '3rem',
                             paddingRight: '0'
                         }}>
@@ -399,56 +425,92 @@ export default function About() {
                                 </motion.p>
                             </div>
 
-                            {/* Skills Section - Modern & Minimalist */}
+                            {/* Skills Section - Modern Tech Grid */}
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                                 transition={{ duration: 0.8, delay: 0.5 }}
-                                className="mb-12"
+                                className="mb-16"
                             >
-                                <div className="mb-8">
-                                    <h3 className="text-2xl font-light text-white mb-2">Skills & Technologies</h3>
-                                    <div className="w-16 h-px bg-gradient-to-r from-blue-400 to-purple-400"></div>
+                                <div className="mb-12">
+                                    <h3 className="text-3xl font-light text-white mb-4">Skills & Technologies</h3>
+                                    <div className="w-20 h-px bg-gradient-to-r from-blue-400 to-purple-400 mb-4"></div>
+                                    <p className="text-zinc-400 text-lg leading-relaxed max-w-2xl">
+                                        Technologies I use to bring ideas to life, from concept to deployment.
+                                    </p>
                                 </div>
                                 
-                                {/* Modern Grid Layout */}
-                                <div className="space-y-6">
-                                    {Object.entries(skillCategories).map(([category, skills], index) => (
+                                {/* Tech Stack Grid */}
+                                <div className="space-y-12">
+                                    {Object.entries(skillCategories).map(([category, skills], categoryIndex) => (
                                         <motion.div
                                             key={category}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={isInView ? { opacity: 1, x: 0 } : {}}
-                                            transition={{ duration: 0.6, delay: 0.6 + index * 0.15 }}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={isInView ? { opacity: 1, y: 0 } : {}}
+                                            transition={{ duration: 0.6, delay: 0.7 + categoryIndex * 0.2 }}
                                             className="group"
                                         >
                                             {/* Category Header */}
-                                            <div className="mb-4">
-                                                <h4 className="text-sm font-medium text-blue-400/90 uppercase tracking-wider mb-3 flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>
+                                            <div className="mb-8">
+                                                <h4 className="text-xl font-semibold text-white mb-2 flex items-center gap-3">
+                                                    <span className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></span>
                                                     {category}
                                                 </h4>
+                                                <div className="h-px bg-gradient-to-r from-slate-700 via-slate-600 to-transparent"></div>
                                             </div>
                                             
                                             {/* Skills Grid */}
-                                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                                                 {skills.map((skill, skillIndex) => (
                                                     <motion.div
-                                                        key={skill}
-                                                        initial={{ opacity: 0, scale: 0.9 }}
-                                                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                                                        key={skill.name}
+                                                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                                                        animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
                                                         transition={{ 
-                                                            duration: 0.4, 
-                                                            delay: 0.7 + index * 0.1 + skillIndex * 0.05 
+                                                            duration: 0.5, 
+                                                            delay: 0.8 + categoryIndex * 0.1 + skillIndex * 0.08,
+                                                            type: "spring",
+                                                            stiffness: 100
                                                         }}
-                                                        className="relative group/skill"
+                                                        className="group/skill relative"
                                                     >
-                                                        <div className="bg-slate-900/60 backdrop-blur-sm border border-slate-700/30 rounded-lg px-3 py-2.5 text-center transition-all duration-300 hover:border-blue-400/30 hover:bg-slate-800/80 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/10">
-                                                            <span className="text-xs font-medium text-slate-300 group-hover/skill:text-white transition-colors duration-300">
-                                                                {skill}
-                                                            </span>
+                                                        <div className="bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 backdrop-blur-xl border border-slate-700/30 rounded-2xl p-4 transition-all duration-500 hover:border-slate-600/50 hover:shadow-xl hover:shadow-blue-500/5 hover:scale-105 cursor-pointer relative overflow-hidden">
+                                                            {/* Background Gradient */}
+                                                            <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover/skill:opacity-10 transition-all duration-500 rounded-2xl`}></div>
                                                             
-                                                            {/* Subtle hover glow */}
-                                                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-lg opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300"></div>
+                                                            {/* Icon Container */}
+                                                            <div className="relative z-10 flex flex-col items-center text-center space-y-3">
+                                                                <div className="w-12 h-12 flex items-center justify-center relative">
+                                                                    <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-20 rounded-xl group-hover/skill:opacity-30 transition-all duration-300`}></div>
+                                                                    <Image
+                                                                        src={skill.icon}
+                                                                        alt={skill.name}
+                                                                        width={32}
+                                                                        height={32}
+                                                                        className="relative z-10 object-contain filter brightness-90 group-hover/skill:brightness-110 transition-all duration-300"
+                                                                        onError={(e) => {
+                                                                            const target = e.target as HTMLImageElement;
+                                                                            const parent = target.parentElement;
+                                                                            if (parent) {
+                                                                                const initials = skill.name.split(/[\s.-]+/).map((w: string) => w[0]).join('').slice(0, 2) || '?';
+                                                                                parent.innerHTML = `<div class="w-8 h-8 bg-gradient-to-br ${skill.color} rounded-lg flex items-center justify-center text-white font-bold text-sm relative z-10">${initials}</div>`;
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                
+                                                                {/* Skill Name */}
+                                                                <div>
+                                                                    <span className="text-sm font-medium text-slate-200 group-hover/skill:text-white transition-colors duration-300 leading-tight">
+                                                                        {skill.name}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            {/* Animated Border */}
+                                                            <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover/skill:opacity-100 transition-all duration-500 bg-gradient-to-r ${skill.color} p-[1px]`}>
+                                                                <div className="w-full h-full bg-slate-900/95 rounded-2xl"></div>
+                                                            </div>
                                                         </div>
                                                     </motion.div>
                                                 ))}
@@ -456,6 +518,29 @@ export default function About() {
                                         </motion.div>
                                     ))}
                                 </div>
+
+                                {/* Additional Tech Info */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                                    transition={{ duration: 0.6, delay: 1.2 }}
+                                    className="mt-12 p-6 bg-gradient-to-br from-slate-900/80 via-slate-800/60 to-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-700/30"
+                                >
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center border border-slate-700/30">
+                                            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-white font-semibold mb-2">Always Learning</h4>
+                                            <p className="text-slate-300 text-sm leading-relaxed">
+                                                I&apos;m constantly exploring new technologies and frameworks to stay current with industry trends. 
+                                                Currently diving deeper into cloud architecture, AI/ML integration, and advanced web performance optimization.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </motion.div>
 
                             {/* Tab Navigation */}

@@ -2,18 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import dynamic from 'next/dynamic';
-
-const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
 
 export default function HeroSection() {
     const [displayedText, setDisplayedText] = useState('');
     const [currentFont, setCurrentFont] = useState(0);
     const fullText = 'Think. Code. Deploy.';
-    const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
 
     const fontClasses = [
         'font-mono',     // Default
@@ -73,12 +66,6 @@ export default function HeroSection() {
         typeEffect();
     }, []);
 
-    const navItems = [
-        { name: 'Works', path: '/works' },
-        { name: 'About', path: '/about' },
-        { name: 'Resume', path: '/resume' },
-    ];
-
     const socialLinks = [
         { name: 'GitHub', url: 'https://github.com/JCEnero', icon: (
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -126,85 +113,6 @@ export default function HeroSection() {
             transition={{ duration: 1 }}
             className="h-screen flex items-center justify-center relative overflow-hidden"
         >
-            {/* Transparent Navbar */}
-            <motion.nav
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="absolute top-0 w-full bg-transparent z-50"
-            >
-                <div className="container mx-auto px-6 py-6 mt-8">
-                    <div className="flex items-center justify-end">
-                        {/* Desktop Navigation - Top Right */}
-                        <div className="hidden md:flex space-x-8">
-                            {navItems.map((item, index) => (
-                                <motion.div
-                                    key={item.name}
-                                    initial={{ opacity: 0, y: -20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                                >
-                                    <Link
-                                        href={item.path}
-                                        className="relative group"
-                                    >
-                                        <motion.span
-                                            whileHover={{ y: -2 }}
-                                            className={`text-sm font-medium transition-colors duration-300 ${
-                                                pathname === item.path
-                                                    ? 'text-blue-400'
-                                                    : 'text-gray-300 hover:text-white'
-                                            }`}
-                                        >
-                                            {item.name}
-                                        </motion.span>
-                                        {pathname === item.path && (
-                                            <motion.div
-                                                layoutId="activeTab"
-                                                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full"
-                                            />
-                                        )}
-                                    </Link>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        {/* Mobile Menu Button */}
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="md:hidden p-2 text-gray-300 hover:text-white rounded-lg hover:bg-gray-800/50 transition-colors duration-300"
-                        >
-                            <motion.div
-                                whileTap={{ scale: 0.85 }}
-                                className="w-8 h-8 flex flex-col justify-center items-center relative"
-                            >
-                                <motion.span
-                                    animate={isOpen 
-                                        ? { rotate: 45, y: 7, width: 20 } 
-                                        : { rotate: 0, y: -6, width: 24 }}
-                                    className="block h-0.5 bg-current rounded-full absolute transition-all duration-300"
-                                    style={{ transformOrigin: "50% 50%" }}
-                                />
-                                <motion.span
-                                    animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                                    className="block w-6 h-0.5 bg-current rounded-full absolute transition-all duration-300"
-                                />
-                                <motion.span
-                                    animate={isOpen 
-                                        ? { rotate: -45, y: 7, width: 20 } 
-                                        : { rotate: 0, y: 6, width: 24 }}
-                                    className="block h-0.5 bg-current rounded-full absolute transition-all duration-300"
-                                    style={{ transformOrigin: "50% 50%" }}
-                                />
-                            </motion.div>
-                        </button>
-                    </div>
-
-                    {/* Sidebar for Mobile */}
-                    <Sidebar isOpen={isOpen} onClose={() => setIsOpen(false)} />
-                </div>
-            </motion.nav>
-
             {/* Background Elements */}
             <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-slate-950" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,69,219,0.08),transparent_70%)]" />

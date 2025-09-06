@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import { motion } from 'framer-motion';
 
 const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
 
@@ -22,9 +23,9 @@ export default function Navbar() {
         <nav className="fixed top-0 w-full z-50">
             <div className="container mx-auto px-6 py-6">
                 <div className="flex items-center justify-between">
-                    {/* Logo */}
+                    {/* Logo - Invisible on homepage but maintains space */}
                     <Link href="/" className="text-3xl font-extrabold tracking-tight">
-                        <div className="w-16 h-16 md:w-24 md:h-24">
+                        <div className={`w-16 h-16 md:w-24 md:h-24 ${pathname === '/' ? 'opacity-0' : 'opacity-100'}`}>
                             <Image 
                                 src="/LOGO.png" 
                                 alt="JCE Logo" 
@@ -59,20 +60,35 @@ export default function Navbar() {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setSidebarOpen(!isSidebarOpen)}
-                        className="md:hidden p-2 text-gray-300 hover:text-white focus:outline-none"
+                        className="md:hidden p-2 text-gray-300 hover:text-white transition-colors duration-300"
                         aria-label="Toggle sidebar"
                     >
-                        <div className="w-8 h-8 flex flex-col justify-center items-center gap-1.5">
-                            <div className={`w-6 h-0.5 bg-gray-300 transform transition-all duration-300 ${
-                                isSidebarOpen ? 'rotate-45 translate-y-2' : ''
-                            }`} />
-                            <div className={`w-6 h-0.5 bg-gray-300 transition-all duration-300 ${
-                                isSidebarOpen ? 'opacity-0' : 'opacity-100'
-                            }`} />
-                            <div className={`w-6 h-0.5 bg-gray-300 transform transition-all duration-300 ${
-                                isSidebarOpen ? '-rotate-45 -translate-y-2' : ''
-                            }`} />
-                        </div>
+                        <motion.div
+                            whileTap={{ scale: 0.85 }}
+                            className="w-8 h-8 flex flex-col justify-center items-center relative"
+                        >
+                            <motion.span
+                                animate={isSidebarOpen 
+                                    ? { rotate: 45, y: 7, width: 20 } 
+                                    : { rotate: 0, y: -6, width: 24 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="block h-0.5 bg-current rounded-full absolute"
+                                style={{ transformOrigin: "50% 50%" }}
+                            />
+                            <motion.span
+                                animate={isSidebarOpen ? { opacity: 0 } : { opacity: 1 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="block w-6 h-0.5 bg-current rounded-full absolute"
+                            />
+                            <motion.span
+                                animate={isSidebarOpen 
+                                    ? { rotate: -45, y: 7, width: 20 } 
+                                    : { rotate: 0, y: 6, width: 24 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="block h-0.5 bg-current rounded-full absolute"
+                                style={{ transformOrigin: "50% 50%" }}
+                            />
+                        </motion.div>
                     </button>
                 </div>
             </div>

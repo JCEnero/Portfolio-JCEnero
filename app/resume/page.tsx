@@ -19,7 +19,7 @@ export default function Resume() {
                 className="relative z-10"
             >
                 {/* Header */}
-                <section className="pt-48 pb-20 text-center">
+                <section className="pt-32 pb-20 text-center">
                     <div className="container mx-auto px-6">
                         <motion.h1
                             initial={{ y: 20, opacity: 0 }}

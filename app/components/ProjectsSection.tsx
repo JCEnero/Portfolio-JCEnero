@@ -331,7 +331,7 @@ export default function ProjectsSection() {
       <div className="flex h-screen">
         {/* Fixed Left Sidebar */}
         <div ref={leftSidebarRef} className="hidden lg:block fixed left-6 lg:left-12 top-0 w-2/5 xl:w-1/3 h-full z-20">
-          <div className="flex flex-col h-full pt-24 pb-12 px-6 xl:px-8">
+          <div className="flex flex-col h-full pt-32 pb-12 px-6 xl:px-8">
             {/* Project Navigation - Scrollable Container */}
             <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-blue-400/40">
               <motion.div 
@@ -400,7 +400,7 @@ export default function ProjectsSection() {
             width: 'calc(100% + (100vw - 100%))'
           }}
         >
-          <div className="pt-48 pb-12 px-6 lg:px-8" style={{
+          <div className="pt-32 pb-12 px-6 lg:px-8" style={{
             marginRight: '3rem',
             paddingRight: '0'
           }}>
