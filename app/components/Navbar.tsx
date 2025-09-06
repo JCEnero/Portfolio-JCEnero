@@ -16,21 +16,21 @@ export default function Navbar() {
     const navItems = [
         { name: 'Works', path: '/works' },
         { name: 'About', path: '/about' },
-        { name: 'Resume', path: '/resume' },
+        { name: 'Blog', path: '/blog' },
     ];
 
     return (
-        <nav className="fixed top-0 w-full z-50">
-            <div className="container mx-auto px-6 py-6">
+        <nav className="fixed top-0 w-full z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-sm">
+            <div className="container mx-auto px-6 py-3">
                 <div className="flex items-center justify-between">
                     {/* Logo - Invisible on homepage but maintains space */}
                     <Link href="/" className="text-3xl font-extrabold tracking-tight">
-                        <div className={`w-16 h-16 md:w-24 md:h-24 ${pathname === '/' ? 'opacity-0' : 'opacity-100'}`}>
+                        <div className={`w-12 h-12 md:w-16 md:h-16 ${pathname === '/' ? 'opacity-0' : 'opacity-100'}`}>
                             <Image 
                                 src="/LOGO.png" 
                                 alt="JCE Logo" 
-                                width={96}
-                                height={96}
+                                width={64}
+                                height={64}
                                 className="w-full h-full object-contain"
                             />
                         </div>

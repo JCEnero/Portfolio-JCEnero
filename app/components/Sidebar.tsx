@@ -9,7 +9,7 @@ import { icons } from "./SidebarIcons";
 const navItems = [
   { name: "Works", path: "/works" },
   { name: "About", path: "/about" },
-  { name: "Resume", path: "/resume" },
+  { name: "Blog", path: "/blog" },
 ];
 
 export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
