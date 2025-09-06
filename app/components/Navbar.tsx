@@ -20,7 +20,8 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="fixed top-0 w-full z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-sm">
+        <>
+        <nav className="fixed top-0 w-full z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-sm">
             <div className="container mx-auto px-6 py-3">
                 <div className="flex items-center justify-between">
                     {/* Logo - Invisible on homepage but maintains space */}
@@ -92,8 +93,9 @@ export default function Navbar() {
                     </button>
                 </div>
             </div>
-            {/* Mobile Sidebar */}
-            <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
-        </nav>
+    </nav>
+    {/* Mobile Sidebar rendered outside nav so it overlays ALL content */}
+    <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
+    </>
     );
 }

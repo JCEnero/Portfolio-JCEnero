@@ -89,7 +89,7 @@ export default function ContactSection() {
 				{/* Main Footer Content */}
 				<div className="px-4 py-16 md:py-20">
 					<div className="max-w-6xl mx-auto">
-						<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+						<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 							
 							{/* Left Side - Contact Info */}
 							<motion.div
@@ -134,7 +134,7 @@ export default function ContactSection() {
 								whileInView={{ opacity: 1, x: 0 }}
 								viewport={{ once: true }}
 								transition={{ duration: 0.6, delay: 0.2 }}
-								className="lg:text-right"
+								className="lg:text-right lg:mt-0 mt-4"
 							>
 								<div className="flex flex-col gap-4">
 									{/* Modern Contact Button with Dropdown */}
@@ -203,18 +203,6 @@ export default function ContactSection() {
 										</motion.div>
 									)}
 
-									<button
-										type="button"
-										onClick={() => router.push('/resume')}
-										className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-[1.02]"
-									>
-										<svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-											<path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" />
-											<path d="M8 11a1 1 0 100 2h4a1 1 0 100-2H8z" />
-											<path d="M8 7a1 1 0 100 2h4a1 1 0 100-2H8z" />	
-										</svg>
-										<span className="font-medium">View Resume</span>
-									</button>
 								</div>
 								
 								{/* Social Links */}
@@ -273,10 +261,10 @@ export default function ContactSection() {
 								Works
 							</button>
 							<button
-								onClick={() => router.push('/resume')}
+								onClick={() => router.push('/blog')}
 								className="hover:text-gray-300 transition-colors"
 							>
-								Resume
+								Blog
 							</button>
 						</div>
 					</div>
