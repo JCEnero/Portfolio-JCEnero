@@ -319,7 +319,7 @@ export default function Blog() {
                                 </div>
                                 <h3 className="text-xl font-light text-white mb-2">End of Stories</h3>
                                 <p className="text-gray-400 text-center max-w-md">
-                                    You've reached the end! More stories and updates coming soon as I continue my development journey.
+                                    You&apos;ve reached the end! More stories and updates coming soon as I continue my development journey.
                                 </p>
                                 <div className="flex items-center space-x-4 pt-4">
                                     <div className="flex items-center space-x-2 text-sm text-gray-500">

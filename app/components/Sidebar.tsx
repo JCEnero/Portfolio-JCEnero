@@ -41,14 +41,14 @@ export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose:
       mq.addEventListener("change", handler as (e: MediaQueryListEvent) => void);
     } else {
       // Legacy Safari support
-      (mq as any).addListener(handler);
+      (mq as MediaQueryList & { addListener: (listener: typeof handler) => void }).addListener(handler);
     }
     return () => {
       if (mq.removeEventListener) {
         mq.removeEventListener("change", handler as (e: MediaQueryListEvent) => void);
       } else {
         // Legacy Safari support
-        (mq as any).removeListener(handler);
+        (mq as MediaQueryList & { removeListener: (listener: typeof handler) => void }).removeListener(handler);
       }
     };
   }, [onClose]);
