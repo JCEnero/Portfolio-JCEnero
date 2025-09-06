@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
@@ -25,9 +25,11 @@ export default function Navbar() {
                     {/* Logo */}
                     <Link href="/" className="text-3xl font-extrabold tracking-tight">
                         <div className="w-16 h-16 md:w-24 md:h-24">
-                            <img 
+                            <Image 
                                 src="/LOGO.png" 
                                 alt="JCE Logo" 
+                                width={96}
+                                height={96}
                                 className="w-full h-full object-contain"
                             />
                         </div>
