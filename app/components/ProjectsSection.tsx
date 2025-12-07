@@ -95,15 +95,15 @@ export default function ProjectsSection() {
   const projects: Project[] = useMemo(() => [
     {
       id: 1,
-      title: 'IrriQCU',
+      title: 'Aquivus',
       subtitle: 'Smart Agriculture Platform',
       description: 'Revolutionary IoT system leveraging AI for precision agriculture',
       fullDescription: 'An advanced AI-powered IoT irrigation system that combines smart sensors, predictive algorithms, and machine learning to optimize agricultural processes. This comprehensive solution monitors soil moisture, weather patterns, and crop health in real-time, resulting in 37% water optimization, 22% yield increase, and 40% reduction in manual labor.',
       tech: ['React', 'JS', 'TensorFlow', 'Firebase'],
       category: 'IoT & AI',
-      github: 'https://github.com/JCEnero/Irrigation-System',
-      demo: 'https://irrigationqcu.vercel.app/',
-      image: '/projects/Irriqcu-project.png',
+      github: 'https://github.com/JCEnero/crop-care-system-iot-based',
+      demo: 'https://aquivus.web.app/',
+      image: '/projects/aquivus-project.png',
       status: 'Live',
       year: '2024',
       impact: {

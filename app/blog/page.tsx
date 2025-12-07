@@ -36,6 +36,44 @@ export default function Blog() {
 
     const posts: BlogPost[] = [
         {
+            id: 1,
+            author: {
+                name: "John Carl Enero",
+                avatar: "/pfp.jpg",
+                title: "Student & Aspiring Developer"
+            },
+            date: new Date('2025-12-5'),
+            content: "A day I'll never forget. After months of sleepless nights, countless debugging sessions, and endless cups of coffee, today we finally presented our capstone project - Aquivus.\n\nWe stood before a panel of four distinguished faculty members, each armed with tough questions and critical evaluations. The tension was real — all those late-night coding sessions, all the features we implemented, all the testing and refinement — it all came down to this moment. My team and I took turns answering, demonstrating features, and walking through our code. Every question we anticipated. Every concern we addressed. We had prepared for this.\n\nAfter what felt like hours of interrogation and technical discussion, the panel deliberated. Then came the words we'd been waiting for - \"Congratulations, you passed.\"\n\nAll those sleepless nights? Worth it. All those debugging sessions at 3 AM? Worth it. All the stress, the pressure, the moments of doubt? Worth it.\n\nAquivus wasn't just a project — it was a journey. It taught me that great things don't come easy. They come from persistence, teamwork, and the willingness to push through when things get tough.\n\nTo my team - Thank you for staying up with me, for debugging together, and for never giving up. To everyone reading this - If you're working on something challenging right now, keep going. The sleepless nights will pay off. The hard work will be worth it.\n\nThis is just the beginning.",
+            tags: ["Aquivus", "Capstone", "Final Defense", "Achievement", "Project"],
+            type: "experience",
+            image: "/blogs-img/AQUIVUSDEFENSE.jpg"
+        },
+        {
+            id: 3,
+            author: {
+                name: "John Carl Enero",
+                avatar: "/pfp.jpg",
+                title: "Student & Aspiring Developer"
+            },
+            date: new Date('2025-12-1'),
+            content: "\"THE BEST WAY TO PREDICT THE FUTURE IS TO CREATE IT.\" - PETER DRUCKER\n\nJust a reminder to myself and anyone reading this - stop waiting for the perfect moment. Stop waiting for everything to align. The future you want won't just happen. You have to build it, line by line, project by project, day by day.\n\nEvery feature you code, every bug you fix, every late night you spend learning something new - you're literally creating your future. Not predicting it. Not hoping for it. Creating it.\n\nSo keep building. Keep creating. The future is in your hands.",
+            tags: ["Motivation", "Thoughts", "Development"],
+            type: "tip"
+        },
+        {
+            id: 2,
+            author: {
+                name: "John Carl Enero",
+                avatar: "/pfp.jpg",
+                title: "Student & Aspiring Developer"
+            },
+            date: new Date('2024-12-3'),
+            content: "The day I carried an entire project on my shoulders. For months leading up to December 3rd, I had been burning the midnight oil on FindMe — but there was a twist. While my teammates focused on documentation, proposals, and presentations, I was alone in the trenches of code. Every feature, every function, every line — it all fell on me.\n\nDon't get me wrong, documentation is crucial. My team did their part brilliantly with research, user manuals, and technical papers. But when it came to the actual system, the implementation, the debugging at 4 AM when nothing worked — that was my battle to fight. Solo.\n\nThis project pushed me into completely new territory. For the first time, I dove into Blender to create 3D models for FindMe. Learning 3D modeling while simultaneously coding the entire system was intense. I spent hours naming every object in Blender meticulously because each one needed to be called and manipulated through code. Every mesh, every material, every component had to have a specific name so I could reference it programmatically and give it functions. It was like learning two languages at once — Blender's interface and how to integrate 3D assets into my codebase.\n\nThe pressure was immense. There were nights I questioned if I could pull it off. Nights when bugs seemed impossible to fix. Nights when I felt like the weight of the entire project was crushing me. Because it literally was.\n\nThen came the defense. Standing before the panel, my team presented our documentation while I demonstrated the live system. Every feature they described, I had built. Every technical question thrown at us, I answered. The panelists were impressed, but they didn't know the full story — that behind the polished interface and smooth functionality was one programmer who refused to give up.\n\nTo anyone out there coding solo on a team project - I see you. Keep pushing. You've got this.",
+            tags: ["FindMe", "Solo Development", "Final Defense", "Achievement", "Project"],
+            type: "experience",
+            image: "/blogs-img/FINDMEDEFENSE.jpg"
+        },
+        {
             id: 0,
             author: {
                 name: "John Carl Enero",
@@ -43,7 +81,7 @@ export default function Blog() {
                 title: "Student & Aspiring Developer"
             },
             date: new Date('2025-9-7'), // 9th grade, when it all started
-            content: "How It All Started\n\nBack when I was in 9th grade at Lagro High School, I was just 14 years old with no idea where life would take me. In our TLE subject, we were asked to choose electives. For some reason, I was automatically placed in ICT (Information and Communications Technology) — and honestly, I didn&apos;t think much of it at first.\n\nLittle did I know, that moment would change my life.\n\nOur lessons started with the basics of HTML and CSS. At first, I was just doing the usual activities, experimenting with tags and styles. But then I decided to try something fun — I attempted to recreate Facebook&apos;s design using only HTML and CSS.\n\nLooking back, it was far from perfect (honestly, it looked pretty ugly compared to the real thing). But at that time, when my friends and classmates saw it, they were amazed and kept asking me how I did it. The truth is, I was just playing around — messing with CSS colors and simple HTML structures.\n\nThat little experiment made me realize something:\nI wasn&apos;t just doing schoolwork… I was building something from nothing.\n\nAnd that&apos;s where my passion for web development began. What started as a class assignment turned into the foundation of a journey I&apos;m still on today.",
+            content: "How It All Started\n\nBack when I was in 9th grade at Lagro High School, I was just 14 years old with no idea where life would take me. In our TLE subject, we were asked to choose electives. For some reason, I was automatically placed in ICT (Information and Communications Technology) — and honestly, I didn't think much of it at first.\n\nLittle did I know, that moment would change my life.\n\nOur lessons started with the basics of HTML and CSS. At first, I was just doing the usual activities, experimenting with tags and styles. But then I decided to try something fun — I attempted to recreate Facebook's design using only HTML and CSS.\n\nLooking back, it was far from perfect (honestly, it looked pretty ugly compared to the real thing). But at that time, when my friends and classmates saw it, they were amazed and kept asking me how I did it. The truth is, I was just playing around — messing with CSS colors and simple HTML structures.\n\nThat little experiment made me realize something - I wasn't just doing schoolwork… I was building something from nothing.\n\nAnd that's where my passion for web development began. What started as a class assignment turned into the foundation of a journey I'm still on today.",
             tags: ["HTML", "CSS", "First Steps", "School"],
             type: "story",
             pinned: true
